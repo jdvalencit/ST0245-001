@@ -11,13 +11,13 @@ public class Main {
 
         Punto p = new Punto(-1, 1);
         // 0,0
-        System.out.printf("Punto: {%f, %f}\n", p.x(), p.y());
+        System.out.printf("Punto: {%f, %f}\n", p.getPosX(), p.getPosY());
         // 1*sqrt(2)
-        System.out.println("Radio Polar: " + p.radioPolar());
+        System.out.println("Radio Polar: " + p.getRadioPolar());
         // -45
-        System.out.println("Angulo Polar: " + Math.toDegrees(p.anguloPolar()));
+        System.out.println("Angulo Polar: " + Math.toDegrees(p.getAnguloPolar()));
         // 2
-        System.out.println("Angulo Polar: " + p.distanciaEuclidiana(new Punto(1, 1)));
+        System.out.println("Angulo Polar: " + p.getDistanciaEuclidiana(new Punto(1, 1)));
 
         System.out.println();
 
