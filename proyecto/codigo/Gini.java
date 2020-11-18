@@ -114,7 +114,7 @@ public class Gini {
         return valorRetorno;
     }
 
-    static void calcularGini(Condicion[] variables){
+    static void workGini(Condicion[] variables){
 
         for(Condicion var: variables){
 

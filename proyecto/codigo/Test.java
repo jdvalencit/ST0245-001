@@ -9,20 +9,21 @@ public class Test {
 
         long vTrainTime = System.currentTimeMillis();
         Tree vTree = Tree.getRoot(vTrainPath);
-        long vFinalTrainTime = System.currentTimeMillis()-vTrainTime;
+        long vFinalTrainTime = System.currentTimeMillis() - vTrainTime;
         long vTestTime = System.currentTimeMillis();
         float[] vAciertos = TestData(vTestPath, vTree);
-        long vFinalTestTime = System.currentTimeMillis()-vTestTime;
+        long vFinalTestTime = System.currentTimeMillis() - vTestTime;
+
         System.out.println("Total memory usage: ");
         System.out.println("KB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024);
         System.out.println("MB: " + (double) ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024)/1024);
         System.out.println("Training Time: " + vFinalTrainTime);
         System.out.println("Testing Time: " + vFinalTestTime);
-
         System.out.println(Arrays.toString(TestData(vTestPath, vTree)));
+        System.out.println("Proceso finalizado sin errores.");
     }
 
-    public static float[] TestData(String direccion, Tree arbol){
+    private static float[] TestData(String direccion, Tree arbol){
 
         ArrayList<String[]> vDataLista = DataAux.cargar(direccion);
         float[] vPrecisiones =  new float[2];

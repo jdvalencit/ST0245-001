@@ -6,6 +6,8 @@ import java.util.Collections;
 
 public class Statistics {
 
+    public static String vENDOFTREE = "ENDOFTREE";
+
     public static ArrayList<String> getValues(String vLabel) {
 
         ArrayList<String> vArrayList = new ArrayList<>();

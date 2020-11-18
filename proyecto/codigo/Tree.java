@@ -14,105 +14,108 @@ public class Tree {
 
     public static void treeAux(ArrayList<String[]> vDatalist, HashSet<String> vProcessed, Node vNode, Condicion[] vCondiciones){
 
-        ArrayList<String[]> SI = new ArrayList<>();
-        ArrayList<String[]> NO = new ArrayList<>();
-        final int CANTIDAD_VALORES = 198;
+        ArrayList<String[]> vPositive = new ArrayList<>();
+        ArrayList<String[]> vNegative = new ArrayList<>();
+        final int vValues = 198;
 
-        for(String [] filas: vDatalist){
-            if(filas[vNode.vContenido.getIndex()].equals(vNode.vContenido.getlabelContenido())) SI.add(filas);
-            else NO.add(filas);
+        for(String[] vTemp : vDatalist){
+
+            if(vTemp[vNode.vContenido.getIndex()].equals(vNode.vContenido.getlabelContenido())) vPositive.add(vTemp);
+            else vNegative.add(vTemp);
         }
 
-        if(SI.size()<10){
+        if(vPositive.size() < 10){
 
-            int n = DataAux.comprobarDatoMayor(SI);
-            if(n == 1) vNode.vRight = new Node(new ContenidoNodo("1", "Terminal", -1));
-            else vNode.vRight = new Node(new ContenidoNodo("0", "Terminal", -1));
+            int vTemp = DataAux.comprobarDatoMayor(vPositive);
+            if(vTemp == 1) vNode.vRight = new Node(new ContenidoNodo("1", Statistics.vENDOFTREE, -1));
+            else vNode.vRight = new Node(new ContenidoNodo("0", Statistics.vENDOFTREE, -1));
         }
 
-        if(NO.size()<10){
+        if(vNegative.size() < 10){
 
-            int n = DataAux.comprobarDatoMayor(NO);
-            if(n == 1) vNode.vLeft = new Node(new ContenidoNodo("1", "Terminal", -1));
-            else vNode.vLeft = new Node(new ContenidoNodo("0", "Terminal", -1));
+            int vTemp = DataAux.comprobarDatoMayor(vNegative);
+            if(vTemp == 1) vNode.vLeft = new Node(new ContenidoNodo("1", Statistics.vENDOFTREE, -1));
+            else vNode.vLeft = new Node(new ContenidoNodo("0", Statistics.vENDOFTREE, -1));
         }
 
         HashSet<String> vProcessedY = new HashSet<>();
         HashSet<String> vProcessedN = new HashSet<>();
         Condicion[] vAmountY = new Condicion[30];
         Condicion[] vAmountN = new Condicion[30];
+        int vSize = vCondiciones.length;
 
-        for(int i = 0;i<vCondiciones.length;i++){
+        for(int i = 0;i < vSize;i++){
 
             vAmountY [i] = new Condicion(vCondiciones[i].getNombreVariable(), i);
             vAmountN [i] = new Condicion(vCondiciones[i].getNombreVariable(), i);
         }
+
         for(String vCurrent : vProcessed){
 
             vProcessedY.add(vCurrent);
             vProcessedN.add(vCurrent);
         }
 
-        if(vNode.vLeft == null || !vNode.vLeft.vContenido.getpreContenido().equals("Terminal")){
+        if(vNode.vLeft == null || !vNode.vLeft.vContenido.getpreContenido().equals(Statistics.vENDOFTREE)){
 
-            if(!DataAux.pasarValores(NO, vProcessedN, vAmountN)){
+            if(!DataAux.pasarValores(vNegative, vProcessedN, vAmountN)){
 
-                int n = DataAux.comprobarDatoMayor(NO);
-                if(n == 1) vNode.vLeft = new Node(new ContenidoNodo("1", "Terminal", -1));
-                else vNode.vLeft = new Node(new ContenidoNodo("0", "Terminal", -1));
+                int vTemp = DataAux.comprobarDatoMayor(vNegative);
+                if(vTemp == 1) vNode.vLeft = new Node(new ContenidoNodo("1", Statistics.vENDOFTREE, -1));
+                else vNode.vLeft = new Node(new ContenidoNodo("0", Statistics.vENDOFTREE, -1));
             } else{
 
-                DataAux.vTempsCount(NO, vProcessedN, vAmountN);
-                Gini.calcularGini(vAmountN);
+                DataAux.vTempsCount(vNegative, vProcessedN, vAmountN);
+                Gini.workGini(vAmountN);
                 ContenidoNodo vGini =  Gini.giniMenor(vAmountN);
                 vProcessedN.add(vGini.getpreContenido() + vGini.getlabelContenido());
 
-                if(vProcessedN.size() == CANTIDAD_VALORES){
+                if(vProcessedN.size() == vValues){
 
-                    int vTemp = DataAux.comprobarDatoMayor(NO);
+                    int vTemp = DataAux.comprobarDatoMayor(vNegative);
 
-                    if(vTemp == 1) vNode.vLeft = new Node(new ContenidoNodo("1", "Terminal", -1));
-                    else vNode.vLeft = new Node(new ContenidoNodo("0", "Terminal", -1));
-                } else if(Statistics.isEquals(NO)){
+                    if(vTemp == 1) vNode.vLeft = new Node(new ContenidoNodo("1", Statistics.vENDOFTREE, -1));
+                    else vNode.vLeft = new Node(new ContenidoNodo("0", Statistics.vENDOFTREE, -1));
+                } else if(Statistics.isEquals(vNegative)){
 
-                    if(NO.get(0)[30].equals("1")) vNode.vLeft = new Node(new ContenidoNodo("1", "Terminal", -1));
-                    else vNode.vLeft = new Node(new ContenidoNodo("0", "Terminal", -1));
-
+                    if(vNegative.get(0)[30].equals("1")) vNode.vLeft = new Node(new ContenidoNodo("1", Statistics.vENDOFTREE, -1));
+                    else vNode.vLeft = new Node(new ContenidoNodo("0", Statistics.vENDOFTREE, -1));
                 } else{
+
                     vNode.vLeft =  new Node(vGini);
-                    treeAux(NO, vProcessedN, vNode.vLeft, vAmountN);
+                    treeAux(vNegative, vProcessedN, vNode.vLeft, vAmountN);
                 }
             }
         }
 
-        if(vNode.vRight == null || !vNode.vRight.vContenido.getpreContenido().equals("Terminal")){
+        if(vNode.vRight == null || !vNode.vRight.vContenido.getpreContenido().equals(Statistics.vENDOFTREE)){
 
-            if(!DataAux.pasarValores(SI, vProcessedY, vAmountY)){
+            if(!DataAux.pasarValores(vPositive, vProcessedY, vAmountY)){
 
-                int n = DataAux.comprobarDatoMayor(SI);
-                if(n == 1) vNode.vRight = new Node(new ContenidoNodo("1", "Terminal", -1));
-                else vNode.vRight = new Node(new ContenidoNodo("0", "Terminal", -1));
+                int n = DataAux.comprobarDatoMayor(vPositive);
+                if(n == 1) vNode.vRight = new Node(new ContenidoNodo("1", Statistics.vENDOFTREE, -1));
+                else vNode.vRight = new Node(new ContenidoNodo("0", Statistics.vENDOFTREE, -1));
             } else{
 
-                DataAux.vTempsCount(SI, vProcessedY, vAmountY);
-                Gini.calcularGini(vAmountY);
+                DataAux.vTempsCount(vPositive, vProcessedY, vAmountY);
+                Gini.workGini(vAmountY);
                 ContenidoNodo valor =  Gini.giniMenor(vAmountY);
                 vProcessedY.add(valor.getpreContenido()+valor.getlabelContenido());
 
-                if(vProcessedY.size() == CANTIDAD_VALORES){
+                if(vProcessedY.size() == vValues){
 
-                    int n = DataAux.comprobarDatoMayor(SI);
-                    if(n == 1) vNode.vRight = new Node(new ContenidoNodo("1", "Terminal", -1));
-                    else vNode.vRight = new Node(new ContenidoNodo("0", "Terminal", -1));
+                    int n = DataAux.comprobarDatoMayor(vPositive);
+                    if(n == 1) vNode.vRight = new Node(new ContenidoNodo("1", Statistics.vENDOFTREE, -1));
+                    else vNode.vRight = new Node(new ContenidoNodo("0", Statistics.vENDOFTREE, -1));
 
-                }else if(Statistics.isEquals(SI)){
+                }else if(Statistics.isEquals(vPositive)){
 
-                    if(SI.get(0)[30].equals("1")) vNode.vRight = new Node(new ContenidoNodo("1", "Terminal", -1));
-                    else vNode.vRight = new Node(new ContenidoNodo("0", "Terminal", -1));
+                    if(vPositive.get(0)[30].equals("1")) vNode.vRight = new Node(new ContenidoNodo("1", Statistics.vENDOFTREE, -1));
+                    else vNode.vRight = new Node(new ContenidoNodo("0", Statistics.vENDOFTREE, -1));
 
                 }else{
                     vNode.vRight =  new Node(valor);
-                    treeAux(SI, vProcessedY, vNode.vRight, vAmountY);
+                    treeAux(vPositive, vProcessedY, vNode.vRight, vAmountY);
                 }
             }
         }
@@ -127,7 +130,7 @@ public class Tree {
     HashSet<String> valoresEvaluados = new HashSet<>();
     DataAux.pasarValores(data, valoresEvaluados, variables);
     DataAux.vTempsCount(data,valoresEvaluados , variables);
-    Gini.calcularGini(variables);
+    Gini.workGini(variables);
 
 
     ContenidoNodo valor =  Gini.giniMenor(variables);

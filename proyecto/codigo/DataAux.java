@@ -111,7 +111,7 @@ public static void vTempsCount(ArrayList<String[]> data, HashSet<String> valores
                                 valore.amountY1();
                             } else{
 
-                                valore.masNodoSi_cant0();
+                                valore.amountY0();
                             }
                         } else{
 
@@ -153,9 +153,9 @@ public static void vTempsCount(ArrayList<String[]> data, HashSet<String> valores
 
 public static String dfsTree(String [] fila, Node nodo){ 
     
-    if(nodo.vContenido.getpreContenido().equals("Terminal")) return nodo.vContenido.getlabelContenido();
+    if(nodo.vContenido.getpreContenido().equals(Statistics.vENDOFTREE)) return nodo.vContenido.getlabelContenido();
     if(fila[nodo.vContenido.getIndex()].equals(nodo.vContenido.getlabelContenido())) return dfsTree(fila,nodo.vRight);
-    else return dfsTree(fila,nodo.vLeft);
+    else return dfsTree(fila,nodo.vLeft); //Puede optimizarse pero se obtienen peores resultados
 }
 
 }

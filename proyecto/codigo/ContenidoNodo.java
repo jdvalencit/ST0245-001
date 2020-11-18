@@ -27,17 +27,11 @@ public class ContenidoNodo{
         return this.labelContenido;
     }
 
-    public String getpreContenido() {
-        return preContenido;
-    }
+    public String getpreContenido() { return preContenido; }
 
-    public int getIndex(){
-        return this.index;
-    }
+    public int getIndex(){ return this.index; }
 
-    public float getIndiceGini(){
-        return this.indiceGini;
-    }
+    public float getIndiceGini(){ return this.indiceGini; }
 
     public void calcularIndiceGini(){
 
@@ -65,7 +59,7 @@ public class ContenidoNodo{
     public void amountY1(){
         vY1amount++;
     }
-    public void masNodoSi_cant0(){
+    public void amountY0(){
         vY0amount++;
     }
     public void amountN1(){
