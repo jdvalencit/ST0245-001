@@ -91,9 +91,9 @@ public class Data {
     77: exito
      */
 
-    public static final List<String[]> vDataList = new ArrayList<>();
-    private static final String vPathName = "lite.csv";
-    public static final List<String> vConditions = new ArrayList<>();
+    public static final ArrayList<String[]> vDataList = new ArrayList<>();
+    private static final String vPathName = "Train.csv";
+    public static final ArrayList<String> vConditions = new ArrayList<>();
 
     public static void readData(){
 
@@ -124,7 +124,7 @@ public class Data {
         vFinalList.add(vData);
     }
 
-    public static List<String[]> getDataList(){
+    public static ArrayList<String[]> getDataList(){
 
         return Data.vDataList;
     }
@@ -143,5 +143,20 @@ public class Data {
         }
 
         return vTemp.toString();
+    }
+
+    public static String convertirCadenaANota(String cadena){
+
+        if(cadena.isEmpty()) return "";
+
+        float vFloat = Float.parseFloat(cadena);
+
+        if(vFloat > 0 && vFloat < 21) return "Mayor a 0 y menor a 21";
+        if(vFloat > 20 && vFloat < 41) return "Mayor a 20 y menor a 41";
+        if(vFloat > 40 && vFloat < 61) return "Mayor a 40 y menor a 61";
+        if(vFloat > 60 && vFloat < 81) return "Mayor a 60 y menor a 81";
+        if(vFloat > 80 && vFloat < 101) return "Mayor a 80 y menor a 101";
+
+        return "";
     }
 }

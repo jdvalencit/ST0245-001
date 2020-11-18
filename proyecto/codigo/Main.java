@@ -5,17 +5,18 @@ public class Main {
     public static void main(String[] args) {
 
         Data.readData();
+        Test.makeTest("Test.csv", "Train.csv");
 
-        int[] vArray = new int[]{13,45,65,66,67,68,69,70,71,72,73};
-
-        for(int i = 0; i < vArray.length; i++){
-
-            try{
-                System.out.println(Data.vConditions.get(vArray[i]) + ": " + Gini.getGiniImpurity(vArray[i], Statistics.getMediaAritmetica(Statistics.getUnsortedValues(vArray[i]))));
-            } catch (NumberFormatException e){
-
-                System.out.println(Data.vConditions.get(i) + " dio error.");
-            }
-        }
+        /*
+        System.out.println(Entropia.getEntropias(3)); //0.86
+        System.out.println(Entropia.getEntropias(13)); //0.85
+        System.out.println(Entropia.getEntropias(27)); //0.75
+        System.out.println(Entropia.getEntropias(34)); //0.82
+        System.out.println(Entropia.getEntropias(35)); //0.93
+        System.out.println(Entropia.getEntropias(36)); //0.90
+        System.out.println(Entropia.getEntropias(44)); //0.55
+        System.out.println(Entropia.getEntropias(53)); //0.82
+        System.out.println(Entropia.getEntropias(54)); //0.64
+         */
     }
 }
